@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import recognizer_pb2 as recognizer__pb2
+from proto import recognizer_pb2 as proto_dot_recognizer__pb2
 
 
 class ImageServiceStub(object):
@@ -14,17 +14,17 @@ class ImageServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.ImageReq = channel.unary_unary(
-                '/recognizer.ImageService/ImageReq',
-                request_serializer=recognizer__pb2.ImageURL.SerializeToString,
-                response_deserializer=recognizer__pb2.Account.FromString,
+        self.ImageReqBase64 = channel.unary_unary(
+                '/recognizer.ImageService/ImageReqBase64',
+                request_serializer=proto_dot_recognizer__pb2.ImageBase64.SerializeToString,
+                response_deserializer=proto_dot_recognizer__pb2.Account.FromString,
                 )
 
 
 class ImageServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def ImageReq(self, request, context):
+    def ImageReqBase64(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -33,10 +33,10 @@ class ImageServiceServicer(object):
 
 def add_ImageServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ImageReq': grpc.unary_unary_rpc_method_handler(
-                    servicer.ImageReq,
-                    request_deserializer=recognizer__pb2.ImageURL.FromString,
-                    response_serializer=recognizer__pb2.Account.SerializeToString,
+            'ImageReqBase64': grpc.unary_unary_rpc_method_handler(
+                    servicer.ImageReqBase64,
+                    request_deserializer=proto_dot_recognizer__pb2.ImageBase64.FromString,
+                    response_serializer=proto_dot_recognizer__pb2.Account.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -49,7 +49,7 @@ class ImageService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def ImageReq(request,
+    def ImageReqBase64(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,69 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/recognizer.ImageService/ImageReq',
-            recognizer__pb2.ImageURL.SerializeToString,
-            recognizer__pb2.Account.FromString,
+        return grpc.experimental.unary_unary(request, target, '/recognizer.ImageService/ImageReqBase64',
+            proto_dot_recognizer__pb2.ImageBase64.SerializeToString,
+            proto_dot_recognizer__pb2.Account.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class ImageRegistorStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.ImageReqURL = channel.unary_unary(
+                '/recognizer.ImageRegistor/ImageReqURL',
+                request_serializer=proto_dot_recognizer__pb2.ImageURL.SerializeToString,
+                response_deserializer=proto_dot_recognizer__pb2.Notice.FromString,
+                )
+
+
+class ImageRegistorServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def ImageReqURL(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_ImageRegistorServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'ImageReqURL': grpc.unary_unary_rpc_method_handler(
+                    servicer.ImageReqURL,
+                    request_deserializer=proto_dot_recognizer__pb2.ImageURL.FromString,
+                    response_serializer=proto_dot_recognizer__pb2.Notice.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'recognizer.ImageRegistor', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class ImageRegistor(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def ImageReqURL(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/recognizer.ImageRegistor/ImageReqURL',
+            proto_dot_recognizer__pb2.ImageURL.SerializeToString,
+            proto_dot_recognizer__pb2.Notice.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
